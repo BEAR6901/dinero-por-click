@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>No me des click</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+        #header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #fff;
+            padding: 10px 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        #clickButton {
+            background-image: url('https://example.com/red-button.png'); /* Replace with actual image URL */
+            background-size: cover;
+            width: 200px;
+            height: 100px;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+        #clickButton:active {
+            transform: scale(0.95);
+        }
+        #counter {
+            font-size: 24px;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 10px;
+            border-radius: 5px;
+        }
+        #message {
+            font-size: 20px;
+            margin-top: 20px;
+            color: #333;
+        }
+        #paymentValue {
+            font-size: 18px;
+            color: #333;
+        }
+        #progressBar {
+            width: 100%;
+            background-color: #ddd;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        #progressBarFill {
+            width: 0%;
+            height: 10px;
+            background-color: #4CAF50;
+            border-radius: 5px;
+        }
+        #menu {
+            position: relative;
+            display: inline-block;
+        }
+        #menuButton {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+        }
+        #menuContent {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+        #menuContent input {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        #menuContent button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        #menuContent button:hover {
+            background-color: #45a049;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let clickCount = 0;
+            const button = document.getElementById('clickButton');
+            const counter = document.getElementById('counter');
+            const message = document.getElementById('message');
+            const paymentValue = document.getElementById('paymentValue');
+            const progressBarFill = document.getElementById('progressBarFill');
+            const menuButton = document.getElementById('menuButton');
+            const menuContent = document.getElementById('menuContent');
+            let valuePerClick = 0.001; // Set the value paid per click
+
+            button.onclick = function() {
+                clickCount++;
+                counter.innerHTML = 'Coins: ' + clickCount + ' 💰';
+                paymentValue.innerHTML = 'Valor por clic: $' + (clickCount * valuePerClick).toFixed(3);
+                progressBarFill.style.width = (clickCount % 10) * 10 + '%';
+
+                if (clickCount % 10 === 0) {
+                    window.open('https://www.effectiveratecpm.com/nrjyhfb74?key=e71e0769467c4ae70e791724e430b543', '_blank');
+                }
+                if (clickCount % 2 === 0) {
+                    message.innerHTML = '¡Sigue haciendo clic para ganar más!';
+                }
+            };
+
+            menuButton.onclick = function() {
+                menuContent.style.display = menuContent.style.display === 'block' ? 'none' : 'block';
+            };
+
+            document.getElementById('saveAccount').onclick = function() {
+                const accountNumber = document.getElementById('accountNumber').value;
+                alert('Número de cuenta guardado: ' + accountNumber);
+            };
+        });
+    </script>
+</head>
+<body>
+    <div id="header">
+        <div id="menu">
+            <button id="menuButton">Menu</button>
+            <div id="menuContent">
+                <input type="text" id="accountNumber" placeholder="Número de cuenta">
+                <button id="saveAccount">Guardar</button>
+            </div>
+        </div>
+        <div id="counter">Coins: 0 💰</div>
+        <div id="paymentValue">Valor por clic: $0.00</div>
+    </div>
+    <h1>No me des click</h1>
+    <button id="clickButton">No me des click</button>
+    <div id="progressBar">
+        <div id="progressBarFill"></div>
+    </div>
+    <p>Haz clic en el botón para generar coins. Después de 10 clics, se abrirá una nueva pestaña.</p>
+    <p>¡Haz clic y gana!</p>
+    <div id="message"></div>
+</body>
+</html>
