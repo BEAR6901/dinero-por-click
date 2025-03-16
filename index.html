@@ -3,20 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>No me des click</title>
+    <title>¡Gana dinero!</title>
     <style>
+        :root {
+            --primary-color: #4CAF50; /* Green */
+            --secondary-color: #00796b; /* Dark teal */
+            --background-color: #e0f7fa; /* Light cyan */
+            --text-color: #333;
+            --button-hover-color: #45a049; /* Darker green */
+            --white: #fff;
+        }
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            background-color: #f4f4f4;
+            background-color: var(--background-color);
+            margin: 0;
         }
         #header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: #fff;
+            background-color: var(--secondary-color);
             padding: 10px 20px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            color: var(--white);
         }
         #clickButton {
             background-image: url('https://example.com/red-button.png'); /* Replace with actual image URL */
@@ -26,24 +36,19 @@
             border: none;
             cursor: pointer;
             transition: transform 0.1s;
+            display: block;
+            margin: 0 auto;
+            border-radius: 10px;
         }
         #clickButton:active {
             transform: scale(0.95);
         }
-        #counter {
+        #counter, #paymentValue, #message {
             font-size: 24px;
             background-color: rgba(255, 255, 255, 0.8);
             padding: 10px;
             border-radius: 5px;
-        }
-        #message {
-            font-size: 20px;
-            margin-top: 20px;
-            color: #333;
-        }
-        #paymentValue {
-            font-size: 18px;
-            color: #333;
+            margin: 10px 0;
         }
         #progressBar {
             width: 100%;
@@ -54,80 +59,183 @@
         #progressBarFill {
             width: 0%;
             height: 10px;
-            background-color: #4CAF50;
+            background-color: var(--primary-color);
             border-radius: 5px;
         }
         #menu {
             position: relative;
             display: inline-block;
         }
-        #menuButton {
-            background-color: #4CAF50;
-            color: white;
+        #menuButton, #withdrawButton, #saveAccount, #registerButton {
+            background-color: var(--primary-color);
+            color: var(--white);
             padding: 10px;
             border: none;
             cursor: pointer;
+            width: 100%;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        #menuButton:hover, #withdrawButton:hover, #saveAccount:hover, #registerButton:hover {
+            background-color: var(--button-hover-color);
         }
         #menuContent {
             display: none;
             position: absolute;
-            background-color: #f9f9f9;
+            background-color: var(--white);
             min-width: 160px;
             box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
             z-index: 1;
         }
-        #menuContent input {
+        #menuContent input, #menuContent select {
             width: 100%;
             padding: 10px;
             margin: 5px 0;
             border: 1px solid #ccc;
             border-radius: 5px;
         }
-        #menuContent button {
-            width: 100%;
-            padding: 10px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
+        #referralSection, #withdrawalSection, #registrationSection, #loginSection {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: var(--white);
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
-        #menuContent button:hover {
-            background-color: #45a049;
+        #referralCode {
+            font-size: 18px;
+            color: var(--text-color);
+            margin-top: 10px;
+        }
+        .error {
+            color: red;
+            font-size: 14px;
         }
     </style>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             let clickCount = 0;
-            const button = document.getElementById('clickButton');
-            const counter = document.getElementById('counter');
-            const message = document.getElementById('message');
-            const paymentValue = document.getElementById('paymentValue');
-            const progressBarFill = document.getElementById('progressBarFill');
-            const menuButton = document.getElementById('menuButton');
-            const menuContent = document.getElementById('menuContent');
-            let valuePerClick = 0.001; // Set the value paid per click
+            const elements = {
+                button: document.getElementById('clickButton'),
+                counter: document.getElementById('counter'),
+                message: document.getElementById('message'),
+                paymentValue: document.getElementById('paymentValue'),
+                progressBarFill: document.getElementById('progressBarFill'),
+                menuButton: document.getElementById('menuButton'),
+                menuContent: document.getElementById('menuContent'),
+                accountTypeSelect: document.getElementById('accountType'),
+                confirmedAccount: document.getElementById('confirmedAccount'),
+                withdrawalAmount: document.getElementById('withdrawalAmount'),
+                referralCode: document.getElementById('referralCode'),
+                registrationSection: document.getElementById('registrationSection'),
+                registerButton: document.getElementById('registerButton'),
+                regUsername: document.getElementById('regUsername'),
+                regPassword: document.getElementById('regPassword'),
+                regReferralCode: document.getElementById('regReferralCode'),
+                errorMessage: document.getElementById('errorMessage')
+            };
+            const valuePerClick = 0.001;
 
-            button.onclick = function() {
+            elements.button.onclick = function() {
                 clickCount++;
-                counter.innerHTML = 'Coins: ' + clickCount + ' 💰';
-                paymentValue.innerHTML = 'Valor por clic: $' + (clickCount * valuePerClick).toFixed(3);
-                progressBarFill.style.width = (clickCount % 10) * 10 + '%';
+                elements.counter.innerHTML = 'Coins: ' + clickCount + ' 💰';
+                elements.paymentValue.innerHTML = 'Valor por clic: $' + (clickCount * valuePerClick).toFixed(3);
+                elements.progressBarFill.style.width = (clickCount % 10) * 10 + '%';
 
                 if (clickCount % 10 === 0) {
                     window.open('https://www.effectiveratecpm.com/nrjyhfb74?key=e71e0769467c4ae70e791724e430b543', '_blank');
                 }
                 if (clickCount % 2 === 0) {
-                    message.innerHTML = '¡Sigue haciendo clic para ganar más!';
+                    elements.message.innerHTML = '¡Sigue haciendo clic para ganar más!';
                 }
             };
 
-            menuButton.onclick = function() {
-                menuContent.style.display = menuContent.style.display === 'block' ? 'none' : 'block';
+            elements.menuButton.onclick = function() {
+                elements.menuContent.style.display = elements.menuContent.style.display === 'block' ? 'none' : 'block';
+            };
+
+            elements.accountTypeSelect.onchange = function() {
+                const selectedType = elements.accountTypeSelect.value;
+                const accountTypeDetails = document.getElementById('accountTypeDetails');
+                accountTypeDetails.innerHTML = selectedType === 'Bancolombia' ? `
+                    <select id="accountSubType">
+                        <option value="Ahorro">Ahorro</option>
+                        <option value="Corriente">Corriente</option>
+                    </select>
+                    <input type="text" id="accountNumber" placeholder="Número de cuenta (11 dígitos)" maxlength="11">
+                ` : selectedType === 'Nequi' ? `
+                    <input type="text" id="accountNumber" placeholder="Número de cuenta (11 dígitos)" maxlength="11">
+                ` : '';
             };
 
             document.getElementById('saveAccount').onclick = function() {
                 const accountNumber = document.getElementById('accountNumber').value;
-                alert('Número de cuenta guardado: ' + accountNumber);
+                if (accountNumber.length === 11) {
+                    elements.confirmedAccount.innerHTML = 'Cuenta Confirmada: ' + accountNumber;
+                    elements.menuContent.style.display = 'none';
+                } else {
+                    alert('El número de cuenta debe tener 11 dígitos.');
+                }
+            };
+
+            document.getElementById('withdrawButton').onclick = function() {
+                const amount = withdrawalAmount.value;
+                const requiredPoints = {
+                    '20': 20000,
+                    '50': 50000,
+                    '100': 100000,
+                    '200': 200000,
+                    '500': 500000,
+                    '1000': 1000000
+                };
+                if (clickCount >= requiredPoints[amount]) {
+                    alert('Solicitud de retiro por $' + amount + ' enviada.');
+                } else {
+                    alert('No tienes suficientes puntos para este retiro. Necesitas ' + requiredPoints[amount] + ' puntos.');
+                }
+            };
+
+            const generateReferralCode = () => 'REF' + Math.floor(Math.random() * 10000);
+            const displayReferralCode = () => {
+                elements.referralCode.innerHTML = 'Tu código de referido es: ' + generateReferralCode();
+            };
+
+            elements.registerButton.onclick = function() {
+                const username = elements.regUsername.value.trim();
+                const password = elements.regPassword.value.trim();
+                const referralCode = elements.regReferralCode.value.trim();
+                let valid = true;
+
+                // Clear previous error messages
+                elements.errorMessage.innerHTML = '';
+
+                // Validate username
+                if (username.length < 3) {
+                    elements.errorMessage.innerHTML += '<p class="error">El nombre de usuario debe tener al menos 3 caracteres.</p>';
+                    valid = false;
+                }
+
+                // Validate password
+                if (password.length < 6) {
+                    elements.errorMessage.innerHTML += '<p class="error">La contraseña debe tener al menos 6 caracteres.</p>';
+                    valid = false;
+                }
+
+                if (valid) {
+                    // Clear registration fields
+                    elements.regUsername.value = '';
+                    elements.regPassword.value = '';
+                    elements.regReferralCode.value = '';
+                    registrationSection.style.display = 'none';
+                    elements.button.style.display = 'block';
+                    document.getElementById('clickInstructions').style.display = 'block';
+                    document.getElementById('clickMessage').style.display = 'block';
+                    document.getElementById('withdrawalSection').style.display = 'block';
+                    document.getElementById('referralSection').style.display = 'block';
+                    elements.counter.style.display = 'block';
+                    elements.paymentValue.style.display = 'block';
+                    elements.message.style.display = 'block';
+                    displayReferralCode();
+                }
             };
         });
     </script>
@@ -137,20 +245,58 @@
         <div id="menu">
             <button id="menuButton">Menu</button>
             <div id="menuContent">
-                <input type="text" id="accountNumber" placeholder="Número de cuenta">
+                <select id="accountType">
+                    <option value="">Selecciona el tipo de cuenta</option>
+                    <option value="Nequi">Nequi</option>
+                    <option value="Bancolombia">Bancolombia</option>
+                </select>
+                <div id="accountTypeDetails"></div>
                 <button id="saveAccount">Guardar</button>
             </div>
         </div>
         <div id="counter">Coins: 0 💰</div>
         <div id="paymentValue">Valor por clic: $0.00</div>
+        <div id="confirmedAccount"></div>
     </div>
-    <h1>No me des click</h1>
-    <button id="clickButton">No me des click</button>
-    <div id="progressBar">
+    <h1>¡Gana dinero!</h1>
+    <div id="registrationSection">
+        <h2>Registro</h2>
+        <div id="errorMessage" class="error"></div>
+        <input type="text" id="regUsername" placeholder="Usuario" required>
+        <input type="password" id="regPassword" placeholder="Contraseña" required>
+        <input type="text" id="regReferralCode" placeholder="Código de Referido" required>
+        <button id="registerButton">Registrarse</button>
+    </div>
+    <div id="loginSection" style="display: none;">
+        <h2>Iniciar Sesión</h2>
+        <input type="text" id="username" placeholder="Usuario" required>
+        <input type="password" id="password" placeholder="Contraseña" required>
+        <input type="text" id="referralCodeInput" placeholder="Código de Referido" required>
+        <button id="loginButton">Iniciar Sesión</button>
+    </div>
+    <button id="clickButton" style="display: none;">💰 ¡Gana dinero! 💰</button>
+    <div id="progressBar" style="display: none;">
         <div id="progressBarFill"></div>
     </div>
-    <p>Haz clic en el botón para generar coins. Después de 10 clics, se abrirá una nueva pestaña.</p>
-    <p>¡Haz clic y gana!</p>
-    <div id="message"></div>
+    <p id="clickInstructions" style="display: none;">Haz clic en el botón para ganar dinero con los anuncios que mostramos. Después de 10 clics se abrirá un nuevo anuncio, con estos podemos darte las recompensas que ofrecemos</p>
+    <p id="clickMessage" style="display: none;">¡Haz clic y gana!</p>
+    <div id="message" style="display: none;"></div>
+    <div id="withdrawalSection" style="display: none;">
+        <h2>Retiro</h2>
+        <select id="withdrawalAmount">
+            <option value="20">Retiro de $20 (20,000 puntos)</option>
+            <option value="50">Retiro de $50 (50,000 puntos)</option>
+            <option value="100">Retiro de $100 (100,000 puntos)</option>
+            <option value="200">Retiro de $200 (200,000 puntos)</option>
+            <option value="500">Retiro de $500 (500,000 puntos)</option>
+            <option value="1000">Retiro de $1000 (1,000,000 puntos)</option>
+        </select>
+        <button id="withdrawButton">Solicitar Retiro</button>
+    </div>
+    <div id="referralSection" style="display: none;">
+        <h2>Referidos</h2>
+        <p id="referralCode"></p>
+        <p>Comparte tu código con amigos para que se registren y ganes recompensas. Por cada referido que complete sus primeros 1000 puntos, recibirás 2000 puntos.</p>
+    </div>
 </body>
 </html>
